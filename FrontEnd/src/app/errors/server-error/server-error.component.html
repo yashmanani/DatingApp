@@ -1,0 +1,14 @@
+<h4>Internal server error - refrehing the page wll make the error disapper</h4>
+<ng-container *ngIf="error">
+    <h5 class="text-danger">Error :{{error.message}}</h5>
+    <p class="fw-bold">Note: If you are seeing this</p>
+    <ol>
+        <li>Open chrome dev tools! Then check the failing request in the network</li>
+        <li>Examine the request URL - what API endpoint are you requesting?</li>
+        <li>Reproduce the problem in Postmen</li>
+    </ol>
+    <p>Following is the stack trace</p>
+    <code class="mt-5 bg-light">
+        {{error.details}}
+    </code>
+</ng-container>
