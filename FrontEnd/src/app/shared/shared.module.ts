@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [],
@@ -10,12 +11,16 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
     CommonModule,
     ToastrModule.forRoot({ positionClass: 'toast-bottom-right' }),
     MatTabsModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+    NgxSpinnerModule.forRoot({
+      type: 'ball-pulse'
+    })
   ],
   exports: [
     ToastrModule,
     MatTabsModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+    NgxSpinnerModule
   ]
 })
 export class SharedModule { }

@@ -25,9 +25,8 @@
                 Welcome {{user.username | titlecase}}
             </a>
             <ul class="dropdown-menu mt-3">
-                <li><a class="dropdown-item">Edit Profile</a></li>
+                <li><a class="dropdown-item" routerLink="/member/edit">Edit Profile</a></li>
                 <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
-                <li><a class="dropdown-item">Something else here</a></li>
             </ul>
         </div>
         <form #loginForm="ngForm" class="d-flex" (submit)="login()" autocomplete="off"
