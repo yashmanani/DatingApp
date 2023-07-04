@@ -48,7 +48,7 @@ export class MemberEditComponent implements OnInit {
   getMember(fromCache: boolean = true) {
     if (!this.user)
       return;
-    this.memberService.getMember(this.user.username).subscribe({
+    this.memberService.getMember(this.user.username, fromCache).subscribe({
       next: (value: Member) => {
         this.memberForm.patchValue(value);
         this.member = value;

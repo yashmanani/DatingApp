@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
+import { GalleryItem, ImageItem, Gallery, GalleryRef, GalleryComponent } from 'ng-gallery';
 import { Member } from 'src/models/member';
 import { MembersService } from 'src/services/members.service';
 
@@ -11,26 +11,18 @@ import { MembersService } from 'src/services/members.service';
 })
 export class MemberDetailComponent implements OnInit {
 
+  galleryRef: GalleryRef;
   member: Member | undefined;
-  galleryOptions: NgxGalleryOptions[] = [];
-  galleryImages: NgxGalleryImage[] = [];
 
-  constructor(private memberService: MembersService, private route: ActivatedRoute) {
+  constructor(private memberService: MembersService, private route: ActivatedRoute, private gallery: Gallery) {
+    this.galleryRef = this.gallery.ref('imageGallery');
   }
 
   ngOnInit(): void {
     this.getMember();
-
-    this.galleryOptions = [
-      {
-        width: '500px',
-        height: '500px',
-        imagePercent: 100,
-        thumbnailsColumns: 4,
-        imageAnimation: NgxGalleryAnimation.Slide,
-        preview: false
-      }
-    ]
+    this.galleryRef.indexChanged.subscribe({
+      next: _ => console.log(document.getElementsByTagName("gallery-item"))
+    })
   }
 
   getMember() {
@@ -40,23 +32,11 @@ export class MemberDetailComponent implements OnInit {
     this.memberService.getMember(username).subscribe({
       next: (value: Member) => {
         this.member = value;
-        this.galleryImages = this.getImages();
+        this.member.photos.forEach((photo) => {
+          this.galleryRef.addImage({ src: photo.url, thumb: photo.url });
+          console.log(document.getElementsByTagName("gallery-item"));
+        });
       }
     })
   }
-
-  getImages() {
-    if (!this.member)
-      return [];
-    const imageUrls = [];
-    for (const photo of this.member.photos) {
-      imageUrls.push({
-        small: photo.url,
-        medium: photo.url,
-        big: photo.url
-      })
-    }
-    return imageUrls;
-  }
-
 }
